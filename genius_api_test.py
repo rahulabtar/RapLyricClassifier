@@ -2,19 +2,21 @@ import pandas as pd
 import lyricsgenius
 import os
 from dotenv import load_dotenv
-import csv
-import time
+import rauth
 
 # Load the .env file
-key =  str(os.getenv("API_KEY"))
-
+load_dotenv()
+rauth.OAuth2Session.get_access_token(
+    client_id=os.getenv("CLIENT_ID"),
+    client_secret=os.getenv("CLIENT_SECRET"),
+    scope=["user-read-private", "user-read-email"],
+    redirect_uri="http://localhost:8000/callback"
+)
 # Access the environment variables
 client_access_token = os.getenv("API_KEY")
-client_access_token = ''
 genius = lyricsgenius.Genius(client_access_token, remove_section_headers=True, skip_non_songs=True)
 artist = "Kanye West"
 nb_songs = 1
-langage = "english"
 titles = []
 lyrics = []
 artist_genius = genius.search_artist(artist, max_songs = nb_songs, sort='popularity')
