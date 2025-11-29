@@ -43,7 +43,7 @@ client_access_token = os.getenv("API_KEY")
 
 
 #creaete directories to store lyrics
-artist_list = ["Kanye West", "Drake", "Jayz", "Kendrick Lamar", "Ice Cube", "Snoop Dogg", "Eminem", "Travis Scott", "Lil Wayne", "Dr. Dre", "Reference"]
+artist_list = ["Kanye West", "Drake", "Jayz", "Kendrick Lamar", "Ice Cube", "Snoop Dogg", "Eminem", "Travis Scott", "Lil Wayne", "Dr. Dre"]
 
 genius = lyricsgenius.Genius(client_access_token, remove_section_headers=False, skip_non_songs=True, timeout=30, retries=3)
 genius.skip_non_primary_artists = True
