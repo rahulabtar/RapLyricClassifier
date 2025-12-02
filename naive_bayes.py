@@ -73,7 +73,8 @@ print("\nTraining Multinomial Naive Bayes classifier with different alpha values
 # Binarize labels for multi-class ROC
 y_test_binarized = label_binarize(y_test, classes=classes)
 
-for i in range(11):
+# alpha values from 0.1 to 2.0 in increments of 0.1
+for i in range(1,21):
     alpha = i / 10
     print(f"\n{'-'*80}")
     print(f"Alpha = {alpha:.1f}")
@@ -85,6 +86,8 @@ for i in range(11):
     # Predictions
     preds = model.predict(X_test)
     pred_proba = model.predict_proba(X_test)
+    
+
     
     # Classification report
     print("\nClassification Report:")
@@ -127,18 +130,34 @@ for i in range(11):
     roc_auc = dict()
     
     for class_idx in range(n_classes):
-        fpr[class_idx], tpr[class_idx], _ = roc_curve(
-            y_test_binarized[:, class_idx], 
-            pred_proba[:, class_idx]
-        )
-        roc_auc[class_idx] = auc(fpr[class_idx], tpr[class_idx])
+        # Check if all values are finite before computing ROC
+        proba_col = pred_proba[:, class_idx]
+        if np.isfinite(proba_col).all():
+            fpr[class_idx], tpr[class_idx], _ = roc_curve(
+                y_test_binarized[:, class_idx], 
+                proba_col
+            )
+            roc_auc[class_idx] = auc(fpr[class_idx], tpr[class_idx])
+        else:
+            print(f"  WARNING: Skipping ROC for {classes[class_idx]} due to non-finite values")
+            # Create dummy ROC curve
+            fpr[class_idx] = np.array([0.0, 1.0])
+            tpr[class_idx] = np.array([0.0, 1.0])
+            roc_auc[class_idx] = 0.5  # Random classifier AUC
     
     # Compute micro-average ROC curve and ROC area
-    fpr["micro"], tpr["micro"], _ = roc_curve(
-        y_test_binarized.ravel(), 
-        pred_proba.ravel()
-    )
-    roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+    pred_proba_flat = pred_proba.ravel()
+    if np.isfinite(pred_proba_flat).all():
+        fpr["micro"], tpr["micro"], _ = roc_curve(
+            y_test_binarized.ravel(), 
+            pred_proba_flat
+        )
+        roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+    else:
+        print("  WARNING: Skipping micro-average ROC due to non-finite values")
+        fpr["micro"] = np.array([0.0, 1.0])
+        tpr["micro"] = np.array([0.0, 1.0])
+        roc_auc["micro"] = 0.5
     
     # Plot ROC curves for each class
     colors = plt.cm.rainbow(np.linspace(0, 1, n_classes))
