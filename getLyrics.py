@@ -2,14 +2,13 @@ import pandas as pd
 import lyricsgenius
 import os
 from dotenv import load_dotenv
-import rauth
 
 exlude_terms = ["(Remix)", "(Live)", "(Demo)", "(Acoustic)", "(Instrumental)", "(Interlude)", 
                              "(Version)", "(Reference)", "interview", "(Explicit)", "(Clean)", "Reference)", 
                              "MTV", "Radio Edit", "Demo)", "Version)", "Reference", "[V2]", "[V3]", "[Remix]", "Remix)",
                              "mix"]
 
-def getArtistSongs(artist, nb_songs, exclude_terms=exlude_terms):
+def getArtistSongs(artist, exclude_terms=exlude_terms):
     titles = []
     lyrics = []
     artist_genius = genius.search_artist(artist, max_songs = None, sort='title')
@@ -44,13 +43,11 @@ client_access_token = os.getenv("API_KEY")
 
 
 #creaete directories to store lyrics
-artist_list = ["Kanye West"]
-#["Kanye West", "Drake", "Jayz", "Kendrick Lamar", "Ice Cube", "Snoop Dogg", "Eminem", "Travis Scott", "Lil Wayne", "Dr. Dre", "Reference"]
+artist_list = ["Kanye West", "Drake", "Jayz", "Kendrick Lamar", "Ice Cube", "Snoop Dogg", "Eminem", "Travis Scott", "Lil Wayne", "Dr. Dre"]
 
-nb_songs = 2000
 genius = lyricsgenius.Genius(client_access_token, remove_section_headers=False, skip_non_songs=True, timeout=30, retries=3)
 genius.skip_non_primary_artists = True
 for artist in artist_list:
     os.makedirs(os.path.join('lyrics', artist), exist_ok=True)
-    getArtistSongs(artist, nb_songs)
+    getArtistSongs(artist)
 
