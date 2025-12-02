@@ -46,11 +46,13 @@ X_train, X_test, y_train, y_test = train_test_split(
 # ---------------------
 # Train SVM classifier
 # ---------------------
+print("Training SVM classifier...")
 svm = SVC(kernel="linear", probability=True)
 svm.fit(X_train, y_train)
 
 # ---------------------
 # Evaluate
 # ---------------------
+print("Evaluating SVM classifier...")
 preds = svm.predict(X_test)
 print(classification_report(y_test, preds))
