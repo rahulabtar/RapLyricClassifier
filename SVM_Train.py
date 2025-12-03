@@ -13,28 +13,14 @@ from sklearn.metrics import (
     auc
 )
 
-# ---------------------
-# Load JSONL properly
-# ---------------------
-data = []
-with open("tokenized_dataset_nodre.jsonl", "r", encoding="utf-8") as f:
-    for line in f:
-        data.append(json.loads(line))
+from preprocess_data import load_tokenized_data, preprocess_sequences, print_preprocessing_stats
 
-# ---------------------
-# Prepare training data
-# ---------------------
-X_texts = []
-y_labels = []
+tokenized_data = load_tokenized_data("tokenized_dataset_nodre.jsonl")
 
-for entry in data:
-    token_string = " ".join(str(t) for t in entry["tokens"])
-    X_texts.append(token_string)
-    y_labels.append(entry["artist"])
+X_texts, y_labels, stats_dicts = preprocess_sequences(tokenized_data)
 
-# ---------------------
-# TF-IDF over token IDs
-# ---------------------
+print_preprocessing_stats(stats_dicts)
+
 vectorizer = TfidfVectorizer(
     analyzer="word",
     token_pattern=r"\d+",
