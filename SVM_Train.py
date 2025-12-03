@@ -79,7 +79,7 @@ for train_idx, test_idx in skf.split(X, y_labels):
     y_test_bin = label_binarize(y_test, classes=classes)
 
     # Train SVM (probability=True for ROC)
-    model = SVC(kernel="linear", probability=True)
+    model = SVC(kernel="rbf", degree=3, probability=True)
     model.fit(X_train, y_train)
     preds = model.predict(X_test)
 
@@ -87,6 +87,8 @@ for train_idx, test_idx in skf.split(X, y_labels):
 
     # Metrics
     fold_acc = accuracy_score(y_test, preds)
+    print(f"Accuracy: {fold_acc:.4f}")
+    
     fold_f1 = f1_score(y_test, preds, average="macro")
     fold_accuracies.append(fold_acc)
     fold_macro_f1s.append(fold_f1)

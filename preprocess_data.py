@@ -15,9 +15,9 @@ MAX_TOKENS = 512  # BERT's maximum sequence length
 PROCESSING_STRATEGY = 'split'  # Change to 'truncate' if you prefer truncation
 
 # Truncation strategy (only used if PROCESSING_STRATEGY = 'truncate')
-# - 'start': Keep first 512 tokens (lose end)
-# - 'end': Keep last 512 tokens (lose beginning)
-# - 'middle': Keep [CLS], middle tokens, [SEP] (lose both ends)
+# 'start': Keep first 512 tokens (lose end)
+#  'end': Keep last 512 tokens (lose beginning)
+# 'middle': Keep [CLS], middle tokens, [SEP] (lose both ends)
 TRUNCATION_STRATEGY = 'start'
 
 

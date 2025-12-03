@@ -34,7 +34,7 @@ X = vectorizer.fit_transform(X_texts)
 # Train/test split
 # ---------------------
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y_labels, test_size=0.1, random_state=42, stratify=y_labels
+    X, y_labels, test_size=0.2, random_state=42, stratify=y_labels
 )
 
 # ---------------------
