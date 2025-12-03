@@ -117,7 +117,7 @@ for i in range(1,21):
     plt.ylabel('True Label', fontsize=12)
     plt.xlabel('Predicted Label', fontsize=12)
     plt.tight_layout()
-    plt.savefig(f"naive_bayes_results/confusion_matrix_alpha_{alpha:.1f}.png", dpi=300, bbox_inches='tight')
+    # plt.savefig(f"naive_bayes_results/confusion_matrix_alpha_{alpha:.1f}.png", dpi=300, bbox_inches='tight')
     plt.close()
     print(f"Saved confusion matrix to: naive_bayes_results/confusion_matrix_alpha_{alpha:.1f}.png")
     
