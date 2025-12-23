@@ -10,5 +10,5 @@ pip3 install -r requirements.txt
 ## Results 
 The results folder holds various results from our experiments 
 
-##See Our Paper Here:
+## See Our Paper Here:
 https://docs.google.com/document/d/1fytRYj4tBC1sxpH7OIKZgjSSg6_0Lby5R6ga_A-1BR4/edit?usp=sharing
